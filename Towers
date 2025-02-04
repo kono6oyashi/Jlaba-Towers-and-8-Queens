@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+const int mn = 100;
+int towers[3][mn];
+int sizes[3] = { 0, 0, 0 };
+
+void print_towers(int n)
+{
+    cout << "Состояние башен:" << endl;
+    for (int t = 0; t < 3; t++)
+    {
+        char label = 'A' + t;
+        cout << label << ": ";
+        for (int i = 0; i < sizes[t]; i++)
+        {
+            cout << towers[t][i] << " ";
+        }
+        cout << "\t";
+    }
+    cout << endl;
+}
+
+void move_disk(int start, int end, int n)
+{
+    int disk = towers[start][sizes[start] - 1];
+    --sizes[start];
+    towers[end][sizes[end]] = disk;
+    ++sizes[end];
+
+    cout << "Переместить диск " << disk << " со стержня " << (start + 1) << " на стержень " << (end + 1) << endl;
+    print_towers(n);
+}
+
+void hanoi_tower(int n, int start, int between, int end)
+{
+    if (n == 1)
+    {
+        move_disk(start, end, n);
+        return;
+    }
+    hanoi_tower(n - 1, start, end, between);
+    move_disk(start, end, n);
+    hanoi_tower(n - 1, between, start, end);
+    return;
+}
+
+int main()
+{
+    int n;
+    cout << "Введите количество дисков (от 1 до " << mn << "): ";
+    cin >> n;
+
+    if (n <= 0 || n > mn)
+    {
+        cout << "Ошибка! Количество дисков должно быть от 1 до " << mn << endl;
+        return 1;
+    }
+
+    for (int i = 0; i < n; ++i)
+    {
+        towers[0][i] = n - i;
+    }
+    sizes[0] = n;
+
+    print_towers(n);
+    hanoi_tower(n, 0, 1, 2);
+
+    return 0;
+}
