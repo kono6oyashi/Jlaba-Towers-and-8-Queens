@@ -18,6 +18,7 @@ void print_towers(int n)
         cout << "\t";
     }
     cout << endl;
+    return;
 }
 
 void move_disk(int start, int end, int n)
@@ -29,6 +30,7 @@ void move_disk(int start, int end, int n)
 
     cout << "Переместить диск " << disk << " со стержня " << (start + 1) << " на стержень " << (end + 1) << endl;
     print_towers(n);
+    return;
 }
 
 void hanoi_tower(int n, int start, int between, int end)
